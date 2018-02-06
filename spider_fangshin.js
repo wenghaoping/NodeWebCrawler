@@ -1,3 +1,5 @@
+// 我当方士那些年爬虫
+
 const http = require('http');
 const fs = require('fs');
 const cheerio = require('cheerio');
@@ -23,9 +25,10 @@ let startRequest =  async function(url) {
     }
 };
 
+
 // 在本地存储
 let savedContent = (path, title, detail) => {
-    fs.appendFile(path + title + '.txt', detail, function (err) {
+    fs.appendFile(path + title + '.txt', detail, (err) => {
         if (err) {
             console.log(err);
         }
@@ -33,7 +36,7 @@ let savedContent = (path, title, detail) => {
 }
 // 请求标题
 let titleRequest = (url) => {
-    return new Promise(function (resolve, reject) {
+    return new Promise((resolve, reject) => {
         //采用http模块向服务器发起一次get请求
         http.get(url, function (res) {
             let html = '';        //用来存储请求网页的整个html内容
@@ -61,13 +64,14 @@ let titleRequest = (url) => {
             });
         }).on('error', function (err) {
             console.log(err);
+            reject(err);
         });
     });
 };
 
 // 请求内容
 let mainRequest =  (mainUrl) => {
-    return new Promise(function (resolve, reject) {
+    return new Promise((resolve, reject) => {
         //采用http模块向服务器发起一次get请求
         http.get(mainUrl, function (res) {
             let html = '';        //用来存储请求网页的整个html内容
@@ -84,8 +88,9 @@ let mainRequest =  (mainUrl) => {
             });
         }).on('error', function (err) {
             console.log(err);
+            reject(err);
         });
     });
 }
-
+// 开始执行
 startRequest(url);
