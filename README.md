@@ -15,7 +15,7 @@
 
 ![图片](https://i.imgur.com/qPkOIYS.png)
 # 大致流程 #
-1 获取 URLs 列表(请求资源 request 模块)
+1 获取 URLs 列表(请求资源 http模块)
 2 根据 URLs 列表获取相关页面源码(可能遇到页面编码问题，iconv-lite 模块)
 3 源码解析，获取小说信息( cheerio 模块)
 4 保存小说信息到 txt 文件，并且加适当修饰以及章节信息(写文件 fs)
