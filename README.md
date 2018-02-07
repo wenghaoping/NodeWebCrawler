@@ -9,7 +9,7 @@
  [Git地址，有需要的Clone](https://github.com/wenghaoping/NodeWebCrawler)
 
 ==先从小说网站开始练手，然后爬电影网站，可以下最新的电影，这是我的需求。哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈==
-演示：
+# 演示： #
 
 ![图片](https://i.imgur.com/rLBXyex.png)
 
@@ -23,7 +23,7 @@
 根据小说的导航页，获取到当前章节，然后获取链接
 
 首选通过 http.get() 方法获取页面源码
-获取到源码，打印发现中文乱码，查看发现 charset = 'gbk'，需要进行转码
+获取到源码，打印发现中文乱码，查看发现 ==charset = 'gbk'==，需要进行转码
 使用 iconv-lite 模块进行转码，中文显示正常后开始解析源码，获取需要的 URL，
 为了更方便地解析，需要引进 cheerio 模块，cheerio 可以理解为运行在后台的 jQuery，用法与 jQuery 也十分相似，熟悉 jQuery 的同学可以很快的上手
 
@@ -92,7 +92,7 @@ let mainRequest =  (mainUrl) => {
     });
 }
 ```
-
+# 下面是所有代码 #
 
 ```javascript
 const http = require('http');
@@ -191,7 +191,6 @@ let mainRequest =  (mainUrl) => {
 startRequest(url);
 ```
 
-cheerio是一个node的库，可以理解为一个Node.js版本的jquery，用来从网页中以 css selector取数据，使用方式和jquery基本相同。
 
 
 
