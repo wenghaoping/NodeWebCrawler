@@ -1,10 +1,3 @@
-[个人博客地址]
- (http://www.wenghaoping.com/)
-# NodeWebCrawler
-第一次学习爬虫
-爬小说，爬取的是我最喜欢的一步小说，
-感兴趣的人，可以clone看看。
-可以的话，star呀
 # 先上代码，然后在慢慢逼逼 #
  [Git地址，有需要的Clone](https://github.com/wenghaoping/NodeWebCrawler)
 
@@ -191,17 +184,92 @@ let mainRequest =  (mainUrl) => {
 startRequest(url);
 ```
 
+::: hljs-center
+
+# 2.8更新 #
+
+:::
+
+::: hljs-center
+
+
+=====================================================================
+
+:::
 
 
 
+**  本来是获取一次标题，然后在获取一次内容，这样每一章都要去请求两次，所以导致速度比较慢。
+  现在修改为，标题就一次性全部获取，保存起来，然后去在一次次去获取内容，这样标题请求一次就好了，省了一半的请求，速度能不快嘛。
+  直接贴关键代码，剩下的自己去对比吧**
 
+# 请求标题的时候，修改了一下 #
+```javascript
+// 请求标题
+let titleRequest = (url) => {
+    return new Promise((resolve, reject) => {
+        //采用http模块向服务器发起一次get请求
+        http.get(url, function (res) {
+            let html = '';        //用来存储请求网页的整个html内容
+            //监听data事件，每次取一块数据
+            res.on('data', function (chunk) {
+                html += iconv.decode(chunk, 'GBK');
+            });
+            let allData = [];
+            //监听end事件，如果整个网页内容的html都获取完毕，就执行回调函数
+            res.on('end', function () {
+                let $ = cheerio.load(html); //采用cheerio模块解析html
+                $('#list a').each(function(index, item){
+                    let title = $(this).text();
+                    let mainUrl = $(this).attr('href');
+                    let itemData = {
+                        // 小说标题
+                        title: title,
+                        // 小说详情
+                        mainUrl: baseUrl + mainUrl,
+                        //i是用来判断获取了多少篇文章
+                        i: number
+                    };
+                    allData.push(itemData);
+                });
+                // console.log(allData);     //打印新闻信息
+                resolve(allData);
+            });
+        }).on('error', function (err) {
+            console.log(err);
+            reject(err);
+        });
+    });
+};
+```
+
+# 然后是总的请求修改了一下 #
+```javascript
+// 开始请求，并且写入数据
+let startSave = async function (){
+    // 获取所有标题以及内容的地址，整合成一个json，这样标题获取一次就好了，和上次比，少了好多好多请求。
+    let urlArr = await titleRequest(url);
+    for(let i = 0; i < urlArr.length; i++) {
+        number++;
+        console.log(`开始爬取 ${urlArr[i].title}`);
+        // 开始获取单章内容
+        let mainDetail = await mainRequest(urlArr[i].mainUrl);
+        console.log(`写入 ${urlArr[i].title}`);
+        await savedContent('./data/', `${number} ${urlArr[i].title}`, mainDetail);
+    }
+    console.log('===========================全部完成===========================');
+};
+```
+
+
+这里就不上全部代码了，可以去git库看。
 
 
 
 ::: hljs-center
 
 
-来加我啊
+年轻就是折腾，来加我啊
 
 :::
 
