@@ -4,7 +4,7 @@
 ==先从小说网站开始练手，然后爬电影网站，可以下最新的电影，这是我的需求。哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈==
 # 演示： #
 
-![图片](https://i.imgur.com/rLBXyex.png)
+![图片](https://i.imgur.com/oFeX59B.gif)
 
 ![图片](https://i.imgur.com/qPkOIYS.png)
 # 大致流程 #
