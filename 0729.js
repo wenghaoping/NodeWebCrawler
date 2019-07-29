@@ -89,6 +89,7 @@ let mainRequest = (mainUrl) => {
 				// console.log(detail);     // 打印详情
 				resolve(detail);
 			});
+			html = '';
 		}).on('error', function (err) {
 			console.log(err);
 			reject(err);
